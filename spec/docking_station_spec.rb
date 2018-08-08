@@ -13,7 +13,7 @@ describe DockingStation do
     # it {is_expected.to respond_to :dock(bike)}
   it "accept method: dock with 1 argument" do
     bike = Bike.new
-    expect{DockingStation.new.dock(bike)}.not_to raise_error
+    expect{subject.dock(bike)}.not_to raise_error
   end
 
   # describe "accept method: see_docked_bike" do
@@ -23,9 +23,8 @@ describe DockingStation do
   describe ".see_docked_bike" do
     it "returns bike object" do
       bike = Bike.new
-      docking_station = DockingStation.new
-      docking_station.dock(bike)
-      expect(docking_station.docked_bike).to eq bike
+      subject.dock(bike)
+      expect(subject.docked_bike).to eq bike
     end
   end
 
