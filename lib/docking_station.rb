@@ -2,8 +2,10 @@ require_relative 'bike'
 
 class DockingStation
   DEFAULT_CAPACITY = 20
-  def initialize
+  attr_accessor :capacity
+  def initialize(capacity = DEFAULT_CAPACITY)
     @docked_bikes = []
+    @capacity = capacity
   end
 
   def release_bike
@@ -28,9 +30,8 @@ private
   end
 
   def full?
-    @docked_bikes.length == DEFAULT_CAPACITY
+    @docked_bikes.length == @capacity
   end
-
 end
 
 # figure out why you cant use self with private.

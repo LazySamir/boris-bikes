@@ -47,6 +47,23 @@ let(:mockBike)  { double :bike, working?: true}
     end
   end
 
+  describe ".new" do
+    let(:cap) {30}
+    let(:sub2) {DockingStation.new(cap)}
+    it "allows maintenance to set the capacity of a new DS" do
+      expect(sub2.capacity).to eq cap
+    end
+    it "stops going over set capacity of bikes" do
+      cap.times {sub2.dock(mockBike)}
+      expect(sub2.dock(mockBike)).to raise_error("full capacity")
+    end
+    it "allows us to up to new capacity of bikes" do
+      (cap-1).times {sub2.dock(mockBike)}
+      expect(sub2.dock(mockBike)).to eq mockBike
+    end
+  end
+
+
   # it "accept method: release bike" do
   # expect(DockingStation.new).to respond_to(:release_bike)
   # end
