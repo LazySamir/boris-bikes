@@ -1,18 +1,40 @@
 require_relative 'bike'
 
 class DockingStation
-  attr_reader :docked_bike
+  DEFAULT_CAPACITY = 20
+  def initialize
+    @docked_bikes = []
+  end
 
   def release_bike
-    @docked_bike ? @docked_bike : raise("no bikes")
+    fail "no bikes" if empty?
+    @docked_bikes.pop
   end
 
   def dock(bike)
-    fail "full capacity" if @docked_bike
-    @docked_bike = bike
+    fail "full capacity" if full?
+    @docked_bikes << bike
+    @docked_bikes.last
+  end
+
+  def docked_bike
+    @docked_bikes.last
+  end
+
+private
+
+  def empty?
+    @docked_bikes.empty?
+  end
+
+  def full?
+    @docked_bikes.length == DEFAULT_CAPACITY
   end
 
 end
+
+# figure out why you cant use self with private.
+# why don't use self.empty in release_bike method
 
 # class DockingStation
 #   # other methods omitted for brevity

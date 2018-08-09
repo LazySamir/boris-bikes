@@ -11,14 +11,21 @@ let(:mockBike)  { double :bike, working?: true}
   it "release_bike the raise error if no instance of bike" do
     expect{subject.release_bike}.to raise_error("no bikes")
   end
-
+  it "will release a bike if there is one" do
+    subject.dock(mockBike)
+    expect(subject.release_bike).to eq mockBike
+  end
 
 
   describe "#dock" do
     it {is_expected.to respond_to :dock}
     it "to reject a bike when capacity is full" do
-      subject.dock(mockBike)
+      DockingStation::DEFAULT_CAPACITY.times {subject.dock(mockBike)}
       expect{subject.dock(mockBike)}.to raise_error("full capacity")
+    end
+    it "will allow to store bikes up to capacity" do
+      (DockingStation::DEFAULT_CAPACITY - 1).times { subject.dock(mockBike)}
+      expect(subject.dock(mockBike)).to eq mockBike
     end
 
   end
